@@ -19,6 +19,7 @@ NTSTATUS FindProcessByName(CHAR* process_name, PEPROCESS* process)
 			RtlCopyMemory((PVOID)&active_threads, (PVOID)((uintptr_t)cur_entry + 0x5f0) /*EPROCESS->ActiveThreads*/, sizeof(active_threads));
 			if (active_threads)
 			{
+				ObReferenceObject(cur_entry);
 				*process = cur_entry;
 				return STATUS_SUCCESS;
 			}
