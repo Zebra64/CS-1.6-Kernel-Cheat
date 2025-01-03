@@ -46,6 +46,7 @@ PETHREAD GetWin32Thread(PVOID* win32Thread)
 
 		if (PsIsThreadTerminating(currentEthread))
 		{
+			ObDereferenceObject(currentEthread);
 			currentThreadId++;
 			continue;
 		}
@@ -64,6 +65,8 @@ PETHREAD GetWin32Thread(PVOID* win32Thread)
 				return currentEthread;
 			}
 		}
+
+		ObDereferenceObject(currentEthread);
 		currentThreadId++;
 	} while (0x3000 > currentThreadId);
 
